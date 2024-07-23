@@ -1,0 +1,4 @@
+1) Для сборки образа Docker запустить команду docker build -t jupyter:vav .
+2) Запустить Docker-Compose: docker-compose up -d
+3) Перейти по ссылке Jupyter 
+http://hostname:37779/tree?/token (токен берем  из docker-compose)
