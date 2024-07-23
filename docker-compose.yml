@@ -1,0 +1,39 @@
+---
+version: "3.9"
+services:
+   jupyterlab:
+    image: jupyter:vav
+    container_name: jupyterlab_vav
+    environment:
+      - JUPYTER_TOKEN=Mandarin!7890
+      - JUPYTER_ENABLE_LAB=yes
+      - DOCKER_STACKS_JUPYTER_CMD=notebook
+    volumes:
+      - /opt/sber-datalab-test/jupyter-data:/home/jovyan/work
+    ports:
+      - 37779:8888
+    restart: unless-stopped
+
+   db:
+    image: postgres
+    restart: always
+    environment:
+     - POSTGRES_PASSWORD=Atorik
+     - POSTGRES_USER=postgres
+     - POSTGRES_DB=jupyterlab
+    healthcheck:
+      test: ["CMD-SHELL", "'pg_isready -U postgres'"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+#    volumes:
+#      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 37781:5432
+   adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 37780:8080
+volumes:
+  pgdata:
